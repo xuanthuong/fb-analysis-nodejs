@@ -1,0 +1,21 @@
+extends layout
+
+block page_css
+  //- link(rel='stylesheet', href='/css/lightslider.min.css')
+  link(rel='stylesheet', href='/css/pages/home.css')
+
+block content
+  section.content
+    .row
+      .col-md-12
+        .box.box-primary
+          .box-header
+            i.fa.fa-home
+            h3.box-title Process Mining
+          .box-body
+            ul
+              | This is logging data demo
+
+block page_script
+  //- script(src='/js/lightslider.min.js')
+  script(src='/js/pages/home.js')

@@ -1,0 +1,35 @@
+extends layout
+
+block page_css
+  //- link(rel='stylesheet', href='/css/lightslider.min.css')
+  link(rel='stylesheet', href='/plugins/datatables/dataTables.bootstrap.css')
+  link(rel='stylesheet', href='/css/pages/home.css')
+
+block content
+  section.content
+    .row
+      .panel-body
+        form(method="POST", action="/tasks")
+          button(type="submit") Refresh
+    .row
+      .col-md-12
+        .box.box-solid
+          .box-header.with-border
+            i.fa.fa-text-width
+            h3.box-title Description
+          .box-body
+            dl
+              dt Description lists
+              dd A description list is perfect for defining terms.
+              dt Euismod
+              dd Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
+              dd Donec id elit non mi porta gravida at eget metus.
+              dt Malesuada porta
+              dd Etiam porta sem malesuada magna mollis euismod.
+
+                
+block page_script
+  //- script(src='/js/lightslider.min.js')
+  script(src='/plugins/datatables/jquery.dataTables.min.js')
+  script(src='/plugins/datatables/dataTables.bootstrap.min.js')
+  script(src='/js/pages/dashboard.js')

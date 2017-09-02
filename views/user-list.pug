@@ -1,0 +1,23 @@
+extend layout
+
+block page_css
+  //- link(rel='stylesheet', href='/css/lightslider.min.css')
+  link(rel='stylesheet', href='/css/pages/home.css')
+
+block content
+  section.content
+    .row
+      h3 User List
+      .container
+        table.table
+          thead
+            tr
+              td username
+              td email
+          tbody
+            tr
+              td= 'thuongtran'
+              td= 'thuong.tran@email'
+block page_script
+  //- script(src='/js/lightslider.min.js')
+  script(src='/js/pages/home.js')

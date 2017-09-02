@@ -1,0 +1,73 @@
+extends layout
+
+block page_css
+  //- link(rel='stylesheet', href='/css/lightslider.min.css')
+  link(rel='stylesheet', href='/plugins/datatables/dataTables.bootstrap.css')
+  link(rel='stylesheet', href='/css/pages/home.css')
+
+block content
+  section.content
+    .row
+      .col-md-12
+        .box.box-info
+          .box-header.with-border
+            h3.box-title Horizontal Form
+          // /.box-header
+          // form start
+          form.form-horizontal
+          .box-body
+            .form-group
+              .col-sm-5
+                .row
+                  .col-sm-3
+                    label
+                      | Tên fanpage
+                  .col-sm-9
+                    input.form-control(type='text', placeholder='Tên fanpage')
+              .col-sm-5
+                .row
+                  .col-sm-3
+                    label
+                      | Số bài viết
+                  .col-sm-9
+                    input.form-control(type='text', placeholder='Số lượng bài viết gần đây')
+              .col-sm-2
+                button.btn.btn-info.pull-right(type='submit') Show
+
+    .row
+      .col-md-12
+        .box.box-primary
+          .box-header.with-border
+            h3.box-title Thống kê các bài viết trên facebook
+          .box-body
+            table#posts.table.table-bordered.table-striped.dataTable(role="grid")
+              thead
+                tr
+                  th Nội dung
+                  th Link
+                  th Số lượt bình luận
+                  th Số lượt like
+                  th Số lượt share
+                  th Loại post
+                  th Chủ đề
+                  th Thời gian post
+                  th Người post
+              //- tbody
+              //-   each post in listPostsInfo
+              //-     tr
+              //-       td #{post['Content']}
+              //-       td
+              //-         a(href=post["Link"]) Post Link
+              //-       td= post['NumComment']
+              //-       td= post['NumLike']
+              //-       td= post['NumShare']
+              //-       td= post['Type']
+              //-       td= "Thực phẩm chức năng"
+              //-       td= post['CreatedTime']
+              //-       td= post['Page']
+                
+block page_script
+  //- script(src='/js/lightslider.min.js')
+  script(src='/plugins/datatables/jquery.dataTables.min.js')
+  script(src='/plugins/datatables/dataTables.bootstrap.min.js')
+  script(src='/js/pages/dashboard.js')

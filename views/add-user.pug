@@ -1,0 +1,12 @@
+extend layout
+block page
+  h1 Add New User
+  .container
+    form.form-group(style="color:#111", action='/add-user', method='POST')
+      label.control-label Username
+      //Dau # phai lien ke username
+      input.form-control#username(name='username')
+      label.control-label Email
+      input.form-control#email(name='email')
+      br
+      button(type='submit') Submit

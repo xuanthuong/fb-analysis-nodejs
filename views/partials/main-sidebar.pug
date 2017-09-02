@@ -1,0 +1,29 @@
+aside.main-sidebar
+  // sidebar: style can be found in sidebar.less
+  section.sidebar
+    // search form
+    form.sidebar-form(action='#', method='get')
+      .input-group
+        input.form-control(type='text', name='q', placeholder='Search...')
+        span.input-group-btn
+          button#search-btn.btn.btn-flat(type='submit', name='search')
+            i.fa.fa-search
+    // /.search form
+    // sidebar menu: : style can be found in sidebar.less
+    ul.sidebar-menu
+      li.header MAIN NAVIGATION
+      //- li(class=setActive("/"))
+      li
+        a(href='/')
+          i.fa.fa-home
+          span Home
+      //- li(class=setActive("/documentation"))
+      li
+        a(href='/dashboard')
+          i.fa.fa-book
+          span Dashboard
+      //- li(class=setActive("/upload"))
+      li
+        a(href='/postdetail')
+          i.fa.fa-upload
+          span Tasks

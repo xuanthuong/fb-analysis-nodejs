@@ -1,0 +1,45 @@
+.textElm {
+  color: red;
+  font-size: 18px;
+  background: orange;
+  height: 18px;
+  line-height: 18px;
+  position: absolute;
+  opacity: 0.8;
+}
+
+.bboxblue {
+  border-top: 3px solid blue;
+}
+
+.bboxred {
+  border-bottom: 3px solid red !important;
+  /*background: red;
+  opacity: 0.3;*/
+}
+
+.bboxorange {
+  background: goldenrod;
+  opacity: 0.2;
+  border: 1px solid red;
+}
+
+
+.bbox {
+  position: absolute;
+}
+
+#body {
+  /*background: #223344;*/
+}
+
+#fullimg {
+  /*visibility: hidden;*/
+}
+
+.childimg {
+  position: absolute;
+}
+ul.sidebar-menu li {
+    width: 100%;
+}
