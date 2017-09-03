@@ -10,6 +10,6 @@ router.route('/users')
 router.get('/users/:username', HomeAPIController.getUser)
 
 router.route('/posts')
-  .get(PostAPIController.getPosts)
+  .get(PostAPIController.getPostsInfoFromPage)
 
 module.exports = router

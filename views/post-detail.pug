@@ -8,26 +8,90 @@ block page_css
 block content
   section.content
     .row
-      .panel-body
-        form(method="POST", action="/tasks")
-          button(type="submit") Refresh
+      .col-md-12
+        .box.box-solid
+          //- .box-header.with-border
+            //- h3.box-title Horizontal Form
+          // /.box-header
+          // form start
+          form.form-horizontal
+          .box-body
+            .form-group
+              .col-md-1
+                label
+                  | Post Id
+              .col-md-5
+                input.form-control(type='text', placeholder='Id của bài viết')
+              .col-md-3
+                button.btn.btn-info(type='submit') Show
+    .row
+      .col-md-12
+        .box.box-solid
+          .box-body
+            .col-md-2
+              label
+                | Chủ đề bài viết
+            .col-md-4
+              label
+                | Chủ đề bài viết
+            .col-md-2
+              label
+                | Thời gian
+            .col-md-4
+              label
+                | Thời điểm đăng bài
     .row
       .col-md-12
         .box.box-solid
           .box-header.with-border
             i.fa.fa-text-width
-            h3.box-title Description
+            h3.box-title Nội dung bài viết
           .box-body
-            dl
-              dt Description lists
-              dd A description list is perfect for defining terms.
-              dt Euismod
-              dd Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
-              dd Donec id elit non mi porta gravida at eget metus.
-              dt Malesuada porta
-              dd Etiam porta sem malesuada magna mollis euismod.
+            dd Full nội dung của bài viết, Full nội dung của bài viết, Full nội dung của bài viết
+                | Full nội dung của bài viết, Full nội dung của bài viết, Full nội dung của bài viết.
+                | Full nội dung của bài viết, Full nội dung của bài viết, Full nội dung của bài viết.
+                | Full nội dung của bài viết, Full nội dung của bài viết, Full nội dung của bài viết.
+                | Full nội dung của bài viết, Full nội dung của bài viết, Full nội dung của bài viết.
+    .row
+      .col-md-12
+        .box.box-solid
+          .box-body
+            .col-md-2
+              label | Comments
+              label | 12
+            .col-md-2
+              label | Likes
+              label | 20
+            .col-md-2
+              label | Shares
+              label | 10
+            .col-md-6
+              label | Reaction
+              label | Like
+              label | 10
+              label | Love
+              label | 12
+              label | Sad
+              label | 2
+              label | Angry
+              label | 1
+    .row
+      .col-md-12
+        .box.box-solide
+          .box-header.with-border
+            h3.box-title Thống kê các bài viết trên facebook
+          .box-body
+            table#postDetail.table.table-bordered.table-striped.dataTable(role="grid")
+              thead
+                tr
+                  th User
+                  th Comment
+                  th Positive
+                  th Neutral
+                  th Negative
+                  th Related
+                  th Time
 
-                
 block page_script
   //- script(src='/js/lightslider.min.js')
   script(src='/plugins/datatables/jquery.dataTables.min.js')

@@ -8,22 +8,29 @@ const MongoClient = mongodb.MongoClient
 ACCESS_TOKEN = "452502528468709|3TGCZK9l7Droo-lUuff8fzPqVik"
 API_LINK = "https://graph.facebook.com/v2.10/"
 
-const _getPosts = (page_name, num_post) => {
+const _callFbApi = (url, method) => {
   return new Promise((resolve, reject) => {
-    // Check page_name pattern: is page or a post (status, photo, video) -> handle it
-    let url = "https://graph.facebook.com/v2.10/" + 
-          page_name + "/posts?limit=" + num_post.toString() + "&access_token=" + ACCESS_TOKEN
     let options = {
         url: url,
-        method: 'GET',
+        method: method,
     }
     request(options, (error, response, body) => {
         if (!error && response.statusCode == 200) {
-            resolve(body) // -> call get comments
+            resolve(body)
         } else {
-          console.log(`Error while getting posts from ${page_name}: `, error.message)
+          console.log(`Error while calling fb api: ${url}: `, error.message)
           throw error
         }
+    })
+  })
+}
+
+const _getPosts = (page_name, num_post) => {
+  return new Promise((resolve, reject) => {
+    let url = "https://graph.facebook.com/v2.10/" + 
+          page_name + "/posts?limit=" + num_post.toString() + "&access_token=" + ACCESS_TOKEN
+    _callFbApi(url, 'GET').then((posts) => {
+      resolve(posts)
     })
   })
 }
@@ -31,17 +38,8 @@ const _getPosts = (page_name, num_post) => {
 const _get_comments_one_post = (postId, fields) => {
   return new Promise((resolve, reject) => {
     let url = API_LINK + postId + fields + "&access_token=" + ACCESS_TOKEN
-    let options = {
-        url: url,
-        method: 'GET',
-    }
-    request(options, (error, response, body) => {
-        if (!error && response.statusCode == 200) {
-            resolve(body)
-        } else {
-          // console.log(`Error while getting comments: `, error.message)
-          throw error
-        }
+    _callFbApi(url, 'GET').then((comments) => {
+      resolve(comments)
     })
   })
 }
@@ -131,7 +129,7 @@ const _get_comments_of_all_posts = (posts) => {
   })
 }
 
-const getComments = (page_name, num_post) => {
+const _getPostsInfoFromPage = (page_name, num_post) => {
   return new Promise((resolve, reject) => {
     _getPosts(page_name, num_post).then((posts) => {
       postsJson = JSON.parse(posts)
@@ -143,27 +141,14 @@ const getComments = (page_name, num_post) => {
   })
 }
 
-const _getPostsByApi= () => {
+const _getCommentsFromPost = (postId) => {
   return new Promise((resolve, reject) => {
-    // // Set the headers
-    // const headers = {
-    //     'User-Agent': 'Super Agent/0.0.1',
-    //     'Content-Type': 'application/json'
-    // }
-    // Configure the request
-    const options = {
-        url: 'http://127.0.0.1:5000/posts/',
-        method: 'POST',
-        // headers: headers,
-    }
-    // Start the request
-    request(options, (error, response, body) => {
-        if (!error && response.statusCode == 200) {
-            resolve(body)
-        } else {
-          console.log(`Error while call to Flask server: `, error.message)
-          throw error
-        }
+    _getPosts(page_name, num_post).then((posts) => {
+      postsJson = JSON.parse(posts)
+      postsData = postsJson["data"]
+      _get_comments_of_all_posts(postsData).then((listPostsInfo) => {
+        resolve(listPostsInfo)
+      })
     })
   })
 }
@@ -192,28 +177,5 @@ const _getPostsFromDb = () => {
 
 module.exports = {
   getPostsFromDb: _getPostsFromDb,
-  getAllPostsByApi: _getPostsByApi,
-  getPosts: _getPosts,
-  getComments: getComments,
+  getPostsInfoFromPage: _getPostsInfoFromPage,
 }
-
-
-// const addRawLog = (rawlog) => {
-//   return new Promise((resolve, reject) => {
-//     MongoClient.connect(url, (err, db) => {
-//       if (err) {
-//           reject(err)
-//       } else {
-//           var collection = db.collection('blp_raw_log')
-//           collection.insert(rawLog, (err, result) => {
-//             if (err) {
-//               reject(err)
-//             } else {
-//               resolve(result)
-//             }
-//           })
-//           db.close()    
-//       }
-//     })
-//   })
-// }

@@ -26,11 +26,24 @@ $(document).ready(function() {
          "data": "Link",
          "render": function(data, type, row, meta){
             if(type === 'display'){
-                data = '<a href="' + data + '">' + data + '</a>';
+                data = '<a href="' + data + '">' + "Go to post" + '</a>';
                 // data = '<a id="demo" href="#" onclick="myFunction()">Click me</a>'
             }
             return data;
          }
+      },
+      { 
+        "data": "Link",
+        "render": function(data, type, row, meta){
+          if(type === 'display'){
+            temp = data.split('/')
+            postId = temp[temp.length - 1]
+            result = 'http://localhost:8085/post/' + postId
+            data = '<a href="' + result + '">' + "Chi tiết" + '</a>';
+            // data = '<a id="demo" href="#" onclick="myFunction()">Click me</a>'
+          }
+          return data;
+        }
       },
       { "data": 'NumComment'},
       { "data": 'NumLike'},
