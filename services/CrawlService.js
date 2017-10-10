@@ -3,11 +3,11 @@ var ObjectID = require('mongodb').ObjectID
 const request = require('request')
 const utils = require('../helpers/utils.js')
 
-const url = 'mongodb://localhost:27017/fanpages'
+const MONGODB_URL = process.env.MONGODB_URL || 'mongodb://localhost:27017/fanpages'
 const MongoClient = mongodb.MongoClient
 
-ACCESS_TOKEN = "452502528468709|3TGCZK9l7Droo-lUuff8fzPqVik"
-API_LINK = "https://graph.facebook.com/v2.10/"
+ACCESS_TOKEN = process.env.ACCESS_TOKEN || "452502528468709|3TGCZK9l7Droo-lUuff8fzPqVik"
+API_LINK = process.env.FBAPI_LINK || "https://graph.facebook.com/v2.10/"
 
 const _callFbApi = (url, method) => {
   return new Promise((resolve, reject) => {
@@ -28,8 +28,7 @@ const _callFbApi = (url, method) => {
 
 const _getPosts = (page_name, num_post) => {
   return new Promise((resolve, reject) => {
-    let url = "https://graph.facebook.com/v2.10/" + 
-          page_name + "/posts?limit=" + num_post.toString() + "&access_token=" + ACCESS_TOKEN
+    let url = API_LINK + page_name + "/posts?limit=" + num_post.toString() + "&access_token=" + ACCESS_TOKEN
     _callFbApi(url, 'GET').then((posts) => {
       resolve(posts)
     })
@@ -58,6 +57,8 @@ const _setCommentInfo = (comment) => {
     "UserName": comment['from']['name'],
     "UID": comment['from']['id'],
     "IsRelatedToPost": "Related",
+    "IsNegative": "?",
+    "IsNeutral": "?",
     "IsPositive": "Positive",
   }
   return cmt_info
@@ -154,7 +155,7 @@ const _getCommentsFromPost = (postId) => {
 
 const _getPostsFromDb = () => {
   return new Promise((resolve, reject) => {
-    MongoClient.connect(url, (err, db) => {
+    MongoClient.connect(MONGODB_URL, (err, db) => {
       if (err) {
         console.log(`Error while connecting to db: `, err.message)
         throw err

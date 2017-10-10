@@ -8,7 +8,7 @@ const router = require('./routes/routes')
 const apiRouter = require('./routes/api-routers')
 
 const app = express()
-const port = 8085
+const port = process.env.PORT || 8085
 
 const NODE_ENV = process.env.NODE_ENV || 'developement'
 if (NODE_ENV == 'developement'){
@@ -27,13 +27,13 @@ app.use('/', router)
 app.use('/contact', router)
 app.use('/api', apiRouter)  
 
-const url = 'mongodb://localhost:27017/fanpages'
+const mongo_url = process.env.MONGODB_URL || 'mongodb://localhost:27017/fanpages'
 const MongoClient = mongodb.MongoClient
-MongoClient.connect(url, (err, db) => {
+MongoClient.connect(mongo_url, (err, db) => {
     if (err) {
         console.log('Unable to connect the mongoDB server. Error:', err)
     } else {
-        console.log('A database connection established to', url)
+        console.log('A database connection established to', mongo_url)
         app.listen(port, () => {
         console.log(`Server is running at https://localhost:${port}`)
     })

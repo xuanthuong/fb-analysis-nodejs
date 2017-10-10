@@ -3,10 +3,10 @@ $(document).ready(function() {
     destroy: true,
     $('#postDetail').dataTable({
       ajax: {
-        url: 'http://localhost:8085/api/post/postId',
+        url: 'http://localhost:8085/api/post',
         type: 'GET',
         data: { 
-          "postId": $('#postId').val() ,
+          "postId": $('#postId').val(),
         },
         cache: false,
         dataSrc: function (data) {
@@ -14,35 +14,27 @@ $(document).ready(function() {
         }
       },
       columns: [
-        { "data": "Content"}, 
-        { 
-           "data": "Link",
-           "render": function(data, type, row, meta){
-              if(type === 'display'){
-                  data = '<a href="' + data + '">' + "Go to post" + '</a>';
-              }
-              return data;
-           }
+        { "data": "UserName",
         },
-        { 
-          "data": "Link",
+        { "data": "UID",
           "render": function(data, type, row, meta){
             if(type === 'display'){
-              temp = data.split('/')
-              postId = temp[temp.length - 1]
-              result = 'http://localhost:8085/post/' + postId
-              data = '<a href="' + result + '">' + "Chi tiết" + '</a>';
+              result = 'https://facebook.com/' + data
+              data = '<a href="' + result + '">' + data + '</a>';
             }
             return data;
           }
         },
-        { "data": 'NumComment'},
-        { "data": 'NumLike'},
-        { "data": 'NumShare'},
-        { "data": 'Type'},
-        { "data": 'AdditionalInfo'},
+        { "data": "Phone"},
+        { "data": "Email"},
+        { 
+          "data": "Content",
+        },
+        { "data": 'IsPositive'},
+        { "data": 'IsNeutral'},
+        { "data": 'IsNegative'},
+        { "data": 'IsRelatedToPost'},
         { "data": 'CreatedTime'},
-        { "data": 'Page'}, 
       ]
     })
     e.preventDefault()

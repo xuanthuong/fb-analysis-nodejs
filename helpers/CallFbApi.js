@@ -1,11 +1,12 @@
 const request = require('request')
-ACCESS_TOKEN = "452502528468709|3TGCZK9l7Droo-lUuff8fzPqVik"
+
+ACCESS_TOKEN = process.env.ACCESS_TOKEN || "452502528468709|3TGCZK9l7Droo-lUuff8fzPqVik"
+API_LINK = process.env.FBAPI_LINK || "https://graph.facebook.com/v2.10/"
 
 const _get_posts = (page_name, num_post = 1) => {
   return new Promise((resolve, reject) => {
     results = []
-    url = "https://graph.facebook.com/v2.10/" + 
-          page_name + "/posts?limit=" + str(num_post) + "&access_token=" + ACCESS_TOKEN
+    url = API_LINK + page_name + "/posts?limit=" + str(num_post) + "&access_token=" + ACCESS_TOKEN
     const options = {
         url: url,
         method: 'GET',
@@ -29,8 +30,7 @@ const _getPost = () => {
 
 const get_comments = (posts) => {
   posts.forEach((post) => {
-    url = "https://graph.facebook.com/v2.10/" + post['id'] + 
-                      "?fields=shares,likes.summary(true),comments.summary(true)&access_token=" + ACCESS_TOKEN
+    url = API_LINK + post['id'] + "?fields=shares,likes.summary(true),comments.summary(true)&access_token=" + ACCESS_TOKEN
     const options = {
       url: url,
       method: 'GET',
