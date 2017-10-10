@@ -6,7 +6,7 @@ $(document).ready(function() {
     destroy: true,
     $('#posts').dataTable({
       ajax: {
-        url: 'http://localhost:8085/api/posts',
+        url: 'https://supportmarketing.heroku.com/api/posts',
         type: 'GET',
         data: { 
           "pageName": $('#pageName').val() ,
@@ -35,7 +35,7 @@ $(document).ready(function() {
             if(type === 'display'){
               temp = data.split('/')
               postId = temp[temp.length - 1]
-              result = 'http://localhost:8085/post/' + postId
+              result = 'https://supportmarketing.heroku.com/post/' + postId
               data = '<a href="' + result + '">' + "Chi tiết" + '</a>';
             }
             return data;
