@@ -13,9 +13,23 @@ block content
             i.fa.fa-home
             h3.box-title Social Network Analysis
           .box-body
-            ul
-              | Hướng dẫn sử dụng
-              | Tính năng
+            dt Hướng dẫn sử dụng
+            dd Sau khi đọc xong hướng dẫn sử dụng này, hay click nút BẮT ĐẦU để bắt đầu sử dụng
+            dd Nhập tên fanpage và số lượng post muốn lấy, sau đó click nút Show, đợi 1 lúc để xem kết quả. 
+            | Nếu không thấy kết quả thì vui lòng kiểm tra lại tên fanpages có đúng không.
+            dd Cột Link là để đi đến post trên trang facebook
+            dd Cột Detail là để đi đến chi tiết của post và các comments của post đó
+            dt Chú ý 1: click vào tên cột để sắp xếp theo thứ tự tăng dần hay giảm dần (ví dụ số comments nhiều nhất, ngày post)
+            dt Chú ý 2: click và cột UID của các comments để đi đến profile của user đó
+            dd Trong phiên bản tiếp theo, sẽ có tính năng tự động hiện thị profile của user, cũng như cho phép lưu danh sách user và thông tin user vào file excel hay text
+
+
+    .row
+      .col-md-2
+        //- form(method="GET", action="/dashboard")
+        //-   button(type="submit") Bắt đầu
+        //- a.btn.btn-success.btn-sm.ad-click-event(href='/dashboard') BẮT ĐẦU
+        a.btn.btn-block.btn-primary.btn-lgad-click-event(href='/dashboard') BẮT ĐẦU
 
 block page_script
   //- script(src='/js/lightslider.min.js')

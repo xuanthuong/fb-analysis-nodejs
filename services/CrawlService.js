@@ -66,7 +66,7 @@ const _setCommentInfo = (comment) => {
 
 const _get_all_comments_of_one_post = (postId) => {
   return new Promise((resolve, reject) => {
-    let firstLevel = _get_comments_one_post(postId, "?fields=message,comments.summary(true), \
+    let firstLevel = _get_comments_one_post(postId, "?fields=message,comments.limit(2000).summary(true), \
                                                     likes.summary(true),shares,from,status_type,created_time")
     let secondLevel = _get_comments_one_post(postId, "?fields=comments{comments}")
     
