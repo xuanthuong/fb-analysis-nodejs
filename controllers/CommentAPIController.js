@@ -1,7 +1,7 @@
 const CrawlService = require('../services/CrawlService')
 
 const _getCommentDetail = (req, res) => {
-  const postId = req.query.postId
+  const postId = req.body.postId
   CrawlService.getCommentsFromPost(postId)
   .then((listComments) => {
     res.status(200)

@@ -3,7 +3,7 @@ $(document).ready(function() {
     destroy: true,
     $('#postDetail').dataTable({
       ajax: {
-        url: 'https://supportmarketing.heroku.com/api/post',
+        url: 'http://localhost:8085/api/post',
         type: 'POST',
         data: { 
           "postId": $('#postId').val(),
