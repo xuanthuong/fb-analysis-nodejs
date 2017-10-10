@@ -7,7 +7,7 @@ $(document).ready(function() {
     $('#posts').dataTable({
       ajax: {
         url: 'https://supportmarketing.heroku.com/api/posts',
-        type: 'GET',
+        type: 'POST',
         data: { 
           "pageName": $('#pageName').val() ,
           "numPost": $('#numPost').val()

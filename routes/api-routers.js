@@ -12,9 +12,9 @@ router.route('/users')
 router.get('/users/:username', HomeAPIController.getUser)
 
 router.route('/posts')
-  .get(PostAPIController.getPostsInfoFromPage)
+  .post(PostAPIController.getPostsInfoFromPage)
 
 router.route('/post')
-  .get(CommentAPIController.getCommentDetail)
+  .post(CommentAPIController.getCommentDetail)
 
 module.exports = router
