@@ -3,8 +3,8 @@ $(document).ready(function() {
     // console.log($('input[id=numPost]').val())
     // console.log($('input[name=numPost]').val())
     // console.log($('#numPost').val())
-    destroy: true,
     $('#posts').dataTable({
+      destroy: true,
       ajax: {
         url: '/api/posts',
         type: 'POST',
@@ -45,7 +45,7 @@ $(document).ready(function() {
         { "data": 'NumLike'},
         { "data": 'NumShare'},
         { "data": 'Type'},
-        { "data": 'AdditionalInfo'},
+        // { "data": 'AdditionalInfo'},
         { "data": 'CreatedTime'},
         { "data": 'Page'}, 
       ]

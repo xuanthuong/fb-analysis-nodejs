@@ -67,26 +67,39 @@ const _setCommentInfo = (comment) => {
 const _get_all_comments_of_one_post = (postId) => {
   return new Promise((resolve, reject) => {
     let firstLevel = _get_comments_one_post(postId, "?fields=message,comments.limit(2000).summary(true), \
-                                                    likes.summary(true),shares,from,status_type,created_time")
+                                                    shares,from,status_type,created_time")
     let secondLevel = _get_comments_one_post(postId, "?fields=comments{comments}")
-    
-    Promise.all([firstLevel, secondLevel]).then((comments) => {
-      firstLevelCmt = JSON.parse(comments[0])
-      secondLevelCmt = JSON.parse(comments[1])
 
-      actual_postId = firstLevelCmt['id']
-      let post_info = {
-        'Id': actual_postId,
-        'Content': firstLevelCmt['message'],
-        'Link': "https://facebook.com/" + actual_postId,
-        'NumLike': 'likes' in firstLevelCmt ? firstLevelCmt['likes']['summary']['total_count'] : 0,
-        'NumComment': 'comments' in firstLevelCmt ? firstLevelCmt['comments']['summary']['total_count'] : 0,
-        'NumShare': 'shares' in firstLevelCmt ? firstLevelCmt['shares']['count'] : 0,
-        'NumReact': 12345,
-        'CreatedTime': utils.formatDateTime(firstLevelCmt['created_time'] || ""),
-        'AdditionalInfo': "This is about something, for example",
-        'Type': firstLevelCmt['status_type'],
-        'Page': firstLevelCmt['from']['name'],
+    let like_reactions = _get_comments_one_post(postId, "?fields=reactions.limit(2000).type(LIKE).summary(1)")
+    let love_reactions = _get_comments_one_post(postId, "?fields=reactions.limit(1000).type(LOVE).summary(1)")
+    let sad_reactions = _get_comments_one_post(postId, "?fields=reactions.limit(500).type(SAD).summary(1)")
+    let angry_reactions = _get_comments_one_post(postId, "?fields=reactions.limit(500).type(ANGRY).summary(1)")
+    
+    
+    Promise.all([firstLevel, secondLevel, like_reactions, love_reactions, sad_reactions, angry_reactions])
+      .then((comments) => {
+        firstLevelCmt = JSON.parse(comments[0])
+        secondLevelCmt = JSON.parse(comments[1])
+        like_reactions = JSON.parse(comments[2])
+        love_reactions = JSON.parse(comments[3])
+        sad_reactions = JSON.parse(comments[4])
+        angry_reactions = JSON.parse(comments[5])
+
+        actual_postId = firstLevelCmt['id']
+        let post_info = {
+          'Id': actual_postId,
+          'Content': firstLevelCmt['message'],
+          'Link': "https://facebook.com/" + actual_postId,
+          'NumComment': 'comments' in firstLevelCmt ? firstLevelCmt['comments']['summary']['total_count'] : 0,
+          'NumShare': 'shares' in firstLevelCmt ? firstLevelCmt['shares']['count'] : 0,
+          'NumLike': like_reactions.reactions.summary.total_count,
+          'NumLove': love_reactions.reactions.summary.total_count,
+          'NumSad': sad_reactions.reactions.summary.total_count,
+          'NumAngry': angry_reactions.reactions.summary.total_count,
+          'CreatedTime': utils.formatDateTime(firstLevelCmt['created_time'] || ""),
+          'AdditionalInfo': "This is about something, for example",
+          'Type': firstLevelCmt['status_type'],
+          'Page': firstLevelCmt['from']['name'],
       }
       all_comments = []
       if ('comments' in firstLevelCmt) {
