@@ -1,6 +1,7 @@
 const mongodb = require('mongodb')
 var ObjectID = require('mongodb').ObjectID
 const request = require('request')
+const utils = require('../helpers/utils.js')
 
 const url = 'mongodb://localhost:27017/fanpages'
 const MongoClient = mongodb.MongoClient
@@ -18,7 +19,7 @@ const _callFbApi = (url, method) => {
         if (!error && response.statusCode == 200) {
             resolve(body)
         } else {
-          console.log(`Error while calling fb api: ${url}: `, error.message)
+          console.log(`Error while calling fb api: ${url}: `)
           throw error
         }
     })
@@ -48,10 +49,12 @@ const _setCommentInfo = (comment) => {
   let cmt_info = {
     "Id": comment['id'],
     "Content": comment['message'],
+    "Email": utils.getEmail(comment['message']),
+    "Phone": utils.getPhoneNumber(comment['message']),
     "NumLike": 12345,
     "NumReply": 12345,
     "NumReact": 12345,
-    "CreatedTime": comment['created_time'],
+    "CreatedTime": utils.formatDateTime(comment['created_time']),
     "UserName": comment['from']['name'],
     "UID": comment['from']['id'],
     "IsRelatedToPost": "Related",
@@ -60,26 +63,26 @@ const _setCommentInfo = (comment) => {
   return cmt_info
 }
 
-const _get_all_comments_of_one_post = (post) => {
+const _get_all_comments_of_one_post = (postId) => {
   return new Promise((resolve, reject) => {
-    postId = post["id"]
-    let firstLevel = _get_comments_one_post(postId, "?fields=comments.summary(true),likes.summary(true),shares,from,status_type")
+    let firstLevel = _get_comments_one_post(postId, "?fields=message,comments.summary(true), \
+                                                    likes.summary(true),shares,from,status_type,created_time")
     let secondLevel = _get_comments_one_post(postId, "?fields=comments{comments}")
     
     Promise.all([firstLevel, secondLevel]).then((comments) => {
       firstLevelCmt = JSON.parse(comments[0])
       secondLevelCmt = JSON.parse(comments[1])
 
-      postId = firstLevelCmt['id']
+      actual_postId = firstLevelCmt['id']
       let post_info = {
-        'Id': postId,
-        'Content': post['message'],
-        'Link': "https://facebook.com/" + postId,
+        'Id': actual_postId,
+        'Content': firstLevelCmt['message'],
+        'Link': "https://facebook.com/" + actual_postId,
         'NumLike': 'likes' in firstLevelCmt ? firstLevelCmt['likes']['summary']['total_count'] : 0,
         'NumComment': 'comments' in firstLevelCmt ? firstLevelCmt['comments']['summary']['total_count'] : 0,
         'NumShare': 'shares' in firstLevelCmt ? firstLevelCmt['shares']['count'] : 0,
         'NumReact': 12345,
-        'CreatedTime': post['created_time'] || "",
+        'CreatedTime': utils.formatDateTime(firstLevelCmt['created_time'] || ""),
         'AdditionalInfo': "This is about something, for example",
         'Type': firstLevelCmt['status_type'],
         'Page': firstLevelCmt['from']['name'],
@@ -121,7 +124,7 @@ const _get_comments_of_all_posts = (posts) => {
   return new Promise((resolve, reject) => {
     promises = []
     posts.forEach((post) => {
-      promises.push(_get_all_comments_of_one_post(post))
+      promises.push(_get_all_comments_of_one_post(post.id))
     })
     Promise.all(promises).then((results) => {
       resolve(results)
@@ -143,12 +146,8 @@ const _getPostsInfoFromPage = (page_name, num_post) => {
 
 const _getCommentsFromPost = (postId) => {
   return new Promise((resolve, reject) => {
-    _getPosts(page_name, num_post).then((posts) => {
-      postsJson = JSON.parse(posts)
-      postsData = postsJson["data"]
-      _get_comments_of_all_posts(postsData).then((listPostsInfo) => {
-        resolve(listPostsInfo)
-      })
+    _get_all_comments_of_one_post(postId).then((comments) => {
+      resolve(comments)
     })
   })
 }
@@ -178,4 +177,5 @@ const _getPostsFromDb = () => {
 module.exports = {
   getPostsFromDb: _getPostsFromDb,
   getPostsInfoFromPage: _getPostsInfoFromPage,
+  getCommentsFromPost: _getCommentsFromPost,
 }

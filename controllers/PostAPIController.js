@@ -1,13 +1,14 @@
 const CrawlService = require('../services/CrawlService')
 
 const _getPostsInfoFromPage = (req, res) => {
-  CrawlService.getPostsInfoFromPage('justmenvietnam', 3)
+  pageName = req.query.pageName || 'justmenvietnam'
+  numPost = req.query.numPost || 1
+  CrawlService.getPostsInfoFromPage(pageName, numPost)
   .then((listPostsInfo) => {
     res.status(200)
     .json(listPostsInfo)
   })
   .catch((error) => {
-    console.log(`Error while calling getComments.........`)
     throw error
   })
 }

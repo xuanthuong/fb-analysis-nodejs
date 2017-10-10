@@ -21,9 +21,9 @@ block content
                 label
                   | Post Id
               .col-md-5
-                input.form-control(type='text', placeholder='Id của bài viết')
+                input#postId.form-control(type='text', placeholder='Id của bài viết', value= listComments.Id)
               .col-md-3
-                button.btn.btn-info(type='submit') Show
+                button#showPostDetail.btn.btn-info(type='submit') Show
     .row
       .col-md-12
         .box.box-solid
@@ -33,13 +33,12 @@ block content
                 | Chủ đề bài viết
             .col-md-4
               label
-                | Chủ đề bài viết
+                | {TODO: Tự động biết chủ đề bài viết}
             .col-md-2
               label
                 | Thời gian
             .col-md-4
-              label
-                | Thời điểm đăng bài
+              label= listComments.CreatedTime
     .row
       .col-md-12
         .box.box-solid
@@ -47,24 +46,20 @@ block content
             i.fa.fa-text-width
             h3.box-title Nội dung bài viết
           .box-body
-            dd Full nội dung của bài viết, Full nội dung của bài viết, Full nội dung của bài viết
-                | Full nội dung của bài viết, Full nội dung của bài viết, Full nội dung của bài viết.
-                | Full nội dung của bài viết, Full nội dung của bài viết, Full nội dung của bài viết.
-                | Full nội dung của bài viết, Full nội dung của bài viết, Full nội dung của bài viết.
-                | Full nội dung của bài viết, Full nội dung của bài viết, Full nội dung của bài viết.
+            dd= listComments.Content
     .row
       .col-md-12
         .box.box-solid
           .box-body
             .col-md-2
-              label | Comments
-              label | 12
+              label | Comments |
+              label= listComments.NumComment
             .col-md-2
-              label | Likes
-              label | 20
+              label | Likes |
+              label= listComments.NumLike
             .col-md-2
-              label | Shares
-              label | 10
+              label | Shares |
+              label= listComments.NumShare
             .col-md-6
               label | Reaction
               label | Like
@@ -79,7 +74,7 @@ block content
       .col-md-12
         .box.box-solide
           .box-header.with-border
-            h3.box-title Thống kê các bài viết trên facebook
+            h3.box-title Danh sách bình luận
           .box-body
             table#postDetail.table.table-bordered.table-striped.dataTable(role="grid")
               thead
@@ -91,9 +86,19 @@ block content
                   th Negative
                   th Related
                   th Time
+              tbody
+                each comment in listComments.Comments
+                  tr
+                    td= comment.UserName
+                    td= comment.Content
+                    td= comment.IsPositive
+                    td=  "?"
+                    td= "?"
+                    td= comment.IsRelatedToPost
+                    td= comment.CreatedTime
 
 block page_script
   //- script(src='/js/lightslider.min.js')
   script(src='/plugins/datatables/jquery.dataTables.min.js')
   script(src='/plugins/datatables/dataTables.bootstrap.min.js')
-  script(src='/js/pages/dashboard.js')
+  script(src='/js/pages/post-detail.js')

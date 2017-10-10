@@ -7,6 +7,7 @@ const PostAPIController = require('../controllers/PostAPIController')
 router.route('/users')
   .get(HomeAPIController.getUsers)
   .post(HomeAPIController.createUser)
+
 router.get('/users/:username', HomeAPIController.getUser)
 
 router.route('/posts')
