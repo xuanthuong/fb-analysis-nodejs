@@ -3,7 +3,7 @@ $(document).ready(function() {
     destroy: true,
     $('#postDetail').dataTable({
       ajax: {
-        url: 'http://localhost:8085/api/post',
+        url: '/api/post',
         type: 'POST',
         data: { 
           "postId": $('#postId').val(),
