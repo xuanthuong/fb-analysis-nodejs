@@ -51,25 +51,64 @@ block content
       .col-md-12
         .box.box-solid
           .box-body
-            .col-md-2
-              label | Comments |
-              label= listComments.NumComment
-            .col-md-2
-              label | Likes |
-              label= listComments.NumLike
-            .col-md-2
-              label | Shares |
-              label= listComments.NumShare
-            .col-md-6
-              label | Reaction
-              label | Like
-              label | 10
-              label | Love
-              label | 12
-              label | Sad
-              label | 2
-              label | Angry
-              label | 1
+            .col-sm-2
+              .description-block.border-right
+                label= listComments.NumComment
+                br
+                span.description-text TOTAL COMMENTS
+
+            .col-sm-2
+              .description-block.border-right
+                label= listComments.NumLike
+                br
+                span.description-text TOTAL LIKES
+
+            .col-sm-2
+              .description-block.border-right
+                label= listComments.NumShare
+                br
+                span.description-text TOTAL SHARES
+
+            .col-sm-2
+              .description-block.border-right
+                label= 20
+                br
+                span.description-text.bg-red-active LOVE
+
+            .col-sm-2
+              .description-block.border-right
+                label= 2
+                br
+                span.description-text.bg-blue-active SAD
+
+            .col-sm-2
+              .description-block.border-right
+                label= 2
+                br
+                span.description-text.bg-yellow-active ANGRY
+      //-   .box.box-solid
+      //-     .box-body
+      //-       .col-md-2
+      //-         label | Comments |
+      //-         label= listComments.NumComment
+      //-       .col-md-2
+      //-         label | Likes |
+      //-         label= listComments.NumLike
+      //-       .col-md-2
+      //-         label | Shares |
+      //-         label= listComments.NumShare
+      //-       .col-md-1
+      //-         label.label-success Love
+      //-       .col-md-1
+      //-         label 10
+      //-       .col-md-1
+      //-         label.label-warning Sad
+      //-       .col-md-1
+      //-         label 2
+      //-       .col-md-1
+      //-         label.label-danger Angry
+      //-       .col-md-1
+      //-         label 2
     .row
       .col-md-12
         .box.box-solide
