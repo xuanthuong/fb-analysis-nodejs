@@ -23,6 +23,16 @@ html
     // bootstrap wysihtml5 - text editor
     link(rel='stylesheet', href='/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')
     link(rel='stylesheet', href='/css/custom.css')
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107833332-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-107833332-1');
+    </script>
+
     block page_css
     //if lt IE 9
       script(src='https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js')
@@ -79,11 +89,11 @@ html
     //-   gtag('js', new Date());
     //-   gtag('config', 'UA-107833332-1');
     //- <!-- Global Site Tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107833332-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || []
-      function gtag(){dataLayer.push(arguments)}
-      gtag('js', new Date())
-      gtag('config', 'UA-107833332-1')
-    </script>
+    //- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107833332-1"></script>
+    //- <script>
+    //-   window.dataLayer = window.dataLayer || []
+    //-   function gtag(){dataLayer.push(arguments)}
+    //-   gtag('js', new Date())
+    //-   gtag('config', 'UA-107833332-1')
+    //- </script>
     block page_script
